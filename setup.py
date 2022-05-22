@@ -22,6 +22,7 @@ setup(
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
     author='Marcus Crane',
+    author_email='marcus@utf9k.net',
     url='https://github.com/marcus-crane/devdeck-macos',
     license='MIT',
     packages=find_packages(),
