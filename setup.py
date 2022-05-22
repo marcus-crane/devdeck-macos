@@ -16,13 +16,13 @@ with open(os.path.abspath(os.path.join(os.path.dirname(__file__), 'requirements.
     install_reqs = f.read().splitlines()
 
 setup(
-    name='devdeck_slack',
+    name='devdeck_macos',
     version=get_version(),
-    description="Slack deck and controls for DevDeck.",
+    description="DevDeck commands for interacting with a macOS system",
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
-    author='James Ridgway',
-    url='https://github.com/jamesridgway/devdeck-slack',
+    author='Marcus Crane',
+    url='https://github.com/marcus-crane/devdeck-macos',
     license='MIT',
     packages=find_packages(),
     include_package_data=True,

@@ -1,2 +1,2 @@
-include devdeck_slack/assets/*
+include devdeck_macos/assets/**/*
 include requirements.txt
