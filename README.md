@@ -1,89 +1,51 @@
-# DevDeck - Slack
-![CI](https://github.com/jamesridgway/devdeck-slack/workflows/CI/badge.svg?branch=main)
+# DevDeck - macOS
+![CI](https://github.com/marcus-crane/devdeck-macos/workflows/CI/badge.svg?branch=main)
 
-Slack deck and controls for  [DevDeck](https://github.com/jamesridgway/devdeck).
+> A drop-in replacement for operating system controls and decks implemented in [DevDeck](https://github.com/jamesridgway/devdeck).
 
-In this example, you can manage your presence, status and do-not-disturb settings from your StreamDeck:
+DevDeck is a really neat tool but some of the default controls such as the volume controls assume you are running on a machine with [PulseAudio](https://www.freedesktop.org/wiki/Software/PulseAudio/) ie; Linux.
 
-![Stream Deck - Slack Integration using DevDeck](https://www.jamesridgway.co.uk/content/images/2020/12/streamdeck-slack.jpg)
+This package is intended as a replacement for those controls but with support for macOS instead.
 
+More specifically, it uses `osascript` to issue system commands under the hood.
+
+By drop-in, you should only have to change the package name in the original DevDeck controls to achieve the same effect for macOS eg;
+
+```diff
+decks:
+  - serial_number: "ABC123456789"
+    name: 'devdeck.decks.single_page_deck_controller.SinglePageDeckController'
+    settings:
+      controls:
+-       - name: 'devdeck.controls.volume_mute_control.VolumeMuteControl'
++       - name: 'devdeck_macos.controls.volume_mute_control.VolumeMuteControl'
+```
 
 ## Installing
-Simplify install *DevDeck - Slack* into the same python environment that you have installed DevDeck.
+Simply install *DevDeck - macOS* into the same python environment that you have installed DevDeck.
 
-    pip install devdeck-slack
+```shell
+$ pip install devdeck-macOS
+```
 
 You can then update your DevDeck configuration to use decks and controls from this package.
 
 ## Configuration
 
+At the moment, only `VolumeMuteControl` is implemented but I plan to port over more controls shortly.
+
 Example configuration:
 
-    decks:
-      - serial_number: "ABC123"
-        name: 'devdeck.decks.single_page_deck_controller.SinglePageDeckController'
-        settings:
-          controls:
-            - name: 'devdeck_slack.slack_deck.SlackDeck'
-              key: 0
-              settings:
-                api_key: 'YOUR_API_KEY_GOES_HERE'
-                actions:
-                  - action: online
-                    key: 0
-                  - action: away
-                    key: 1
-                  - action: status
-                    key: 2
-                    text: At my desk
-                    emoji: ':desktop_computer:'
-                    clear_dnd: true
-                  - action: status
-                    key: 5
-                    text: In a meeting
-                    emoji: ':calendar:'
-                  - action: status
-                    key: 6
-                    text: Lunch
-                    emoji: ':sandwich:'
-                  - action: status
-                    key: 7
-                    text: Off sick
-                    emoji: ':face_with_thermometer:'
-                    until: tomorrow at 8am
-                  - action: status
-                    key: 8
-                    text: On holiday
-                    emoji: ':palm_tree:'
-                  - action: dnd
-                    key: 10
-                    duration: 15
-                  - action: dnd
-                    key: 11
-                    duration: 30
-                  - action: dnd
-                    key: 12
-                    duration: 45
-                  - action: dnd
-                    key: 13
-                    duration: 60
-                  - action: dnd
-                    key: 14
-                    duration: 120
+```yaml
+decks:
+  - serial_number: "ABC123456789"
+    name: 'devdeck.decks.single_page_deck_controller.SinglePageDeckController'
+    settings:
+      controls:
+        - name: 'devdeck_macos.controls.volume_mute_control.VolumeMuteControl'
+          key: 0
+```
 
+**NOTE**: Unlike the original package, you do not have to specify the specific microphone as it will default to the currently selected default in System Preferences.
 
-## Registering your app and creating permissions
-This plugin requires a Slack API key to function.
-
-Head over to https://api.slack.com/apps to create your app.
-
-Once you have created your app you will be able to access your OAuth Access Token under **OAuth & Permissions** - this
-is your `api_key` value.
-
-### Scopes
-Under **User Token Scopes** you need want to enable the following scopes:
-
-* `dnd:read`
-* `dnd:write`
-* `users.profile:write`
-* `users:write`
+If there is a need for it, I can see whether osascript supports muting a specific input device.
