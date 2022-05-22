@@ -25,7 +25,7 @@ decks:
 Simply install *DevDeck - macOS* into the same python environment that you have installed DevDeck.
 
 ```shell
-$ pip install devdeck-macOS
+$ pip install devdeck-macos
 ```
 
 You can then update your DevDeck configuration to use decks and controls from this package.
